@@ -20,6 +20,40 @@ def compress_string(string):
     return min(string, "".join(compressed), key=len)
 
 
+
+#aabccccaaa - > a2b1c4a3
+#abbb
+#a
+def string_compression(s):
+    compress = []
+    counter = 0
+    can_compress = False
+    print(s)
+    for i in range(len(s)):
+        if i != 0 and (s[i] != s[i-1]): # Has previous and current does not match previous
+            compress.append(s[i-1])
+            compress.append(str(counter))
+            counter = 0
+        counter += 1
+    # append last match
+    if counter:
+        compress.append(s[-1])
+        compress.append(str(counter))
+
+    # returns original string if compressed string isn't smaller
+    return min(s, "".join(compress), key=len)
+
+
+
+
+
+
+
+
+
+
+
+
 class Test(unittest.TestCase):
     test_cases = [
         ("aabcccccaaa", "a2b1c5a3"),
@@ -30,7 +64,7 @@ class Test(unittest.TestCase):
         ("", ""),
     ]
     testable_functions = [
-        compress_string,
+        compress_string,string_compression
     ]
 
     def test_string_compression(self):

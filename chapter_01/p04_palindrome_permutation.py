@@ -57,6 +57,22 @@ def is_palindrome_permutation_pythonic(phrase):
     counter = Counter(clean_phrase(phrase))
     return sum(val % 2 for val in counter.values()) <= 1
 
+#aabbc -> abcba
+#aabb -> abba
+#dddeee -> dd
+def palindrome_perm(s):
+    word = clean_phrase(s)
+    counts = Counter(word)
+    print(counts)
+    mid = False
+    for v in counts.values():
+        odd = v % 2 != 0
+        if odd:
+            if not mid:
+                mid = True
+            else:
+                return False
+    return True
 
 class Test(unittest.TestCase):
     test_cases = [
@@ -79,6 +95,7 @@ class Test(unittest.TestCase):
         is_palindrome_permutation,
         is_palindrome_bit_vector,
         is_palindrome_permutation_pythonic,
+        palindrome_perm
     ]
 
     def test_pal_perm(self):

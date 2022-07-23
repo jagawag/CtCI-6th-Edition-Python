@@ -53,6 +53,7 @@ class Test(unittest.TestCase):
         check_permutation_by_sort,
         check_permutation_by_count,
         check_permutation_pythonic,
+        check_permutation_jk,
     ]
 
     def test_cp(self):

@@ -39,6 +39,49 @@ def one_edit_insert(s1, s2):
     return True
 
 
+# paste
+# pasts -> replace s w/ e
+# pass  -> add t
+# poss  -> fail 2 edits
+# ababab
+# aababab
+#  ^
+# if words differ in length, they can only differ by 1 (deletions & adds)
+# if words same length, could match, or need 1 edit
+def edit_one(s1,s2):
+    edit_count = 0
+    for i in range(len(s1)):
+        if s1[i] != s2[i]:
+            if edit_count == 0:
+                edit_count += 1
+            else:
+                return False
+    return True
+
+# s1 is longer
+# when diff is found, delete from s1.
+# if another diff is found return False
+# pale
+# pse
+def delete_one(s1,s2):
+    for i in range(len(s1)-1):
+        if s1[i] != s2[i]:
+            for j in range(i,len(s2)):
+                if s1[j+1] != s2[j]:
+                    return False
+    return True
+
+def one_away_jk(s1,s2):
+    diff = len(s1)-len(s2)
+    if diff == 0:
+        return edit_one(s1,s2)
+    elif diff == 1:
+        return delete_one(s1,s2)
+    elif diff == -1:
+        return delete_one(s2,s1) # ensures arg 1 is longer
+    return False
+
+
 class Test(unittest.TestCase):
     test_cases = [
         # no changes
@@ -70,7 +113,7 @@ class Test(unittest.TestCase):
         ("ale", "elas", False),
     ]
 
-    testable_functions = [are_one_edit_different]
+    testable_functions = [are_one_edit_different,one_away_jk]
 
     def test_one_away(self):
 

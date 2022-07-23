@@ -1,25 +1,33 @@
 # O(NxN)
 import unittest
 from copy import deepcopy
+from pprint import pprint
 
 
 def rotate_matrix(matrix):
     """rotates a matrix 90 degrees clockwise"""
+    print(matrix)
     n = len(matrix)
     for layer in range(n // 2):
+        print(layer)
         first, last = layer, n - layer - 1
+        #print(first,last)
         for i in range(first, last):
             # save top
             top = matrix[layer][i]
+            print(top)
 
             # left -> top
             matrix[layer][i] = matrix[-i - 1][layer]
+            print(matrix[layer][i])
 
             # bottom -> left
             matrix[-i - 1][layer] = matrix[-layer - 1][-i - 1]
+            print(matrix[-i - 1][layer])
 
             # right -> bottom
             matrix[-layer - 1][-i - 1] = matrix[i][-layer - 1]
+            print(matrix[-layer - 1][-i - 1])
 
             # top -> right
             matrix[i][-layer - 1] = top
@@ -39,6 +47,43 @@ def rotate_matrix_pythonic(matrix):
 def rotate_matrix_pythonic_alternate(matrix):
     """rotates a matrix 90 degrees clockwise"""
     return [list(reversed(row)) for row in zip(*matrix)]
+
+
+
+def rotate_matrix_jk():
+    m = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9]
+    ]
+    n =  [
+            [21, 16, 11, 6, 1],
+            [22, 17, 12, 7, 2],
+            [23, 18, 13, 8, 3],
+            [24, 19, 14, 9, 4],
+            [25, 20, 15, 10, 5],
+        ]
+    pprint(n)
+    line = "^" * 3
+    print(f"{line}original{line}")
+    # reverse list
+    n.reverse()
+    pprint(n)
+    # print(len(n)) # => 5
+    print(f"{line}reversed{line}")
+    # transpose diagonally
+    for i in range(len(n)):
+        i # 0 -> 4 (b/c range doesn't include upper bound)
+        for j in range(i): # j 0 -> 3 (b/c range doesn't include upper bound)
+            temp = n[i][j]
+            n[i][j] = n[j][i]
+            n[j][i] = temp
+    pprint(n)
+
+
+
+
+
 
 
 class Test(unittest.TestCase):
@@ -76,4 +121,6 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    #unittest.main()
+    rotate_matrix_jk()
+    #rotate_matrix(([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[7, 4, 1], [8, 5, 2], [9, 6, 3]]))
